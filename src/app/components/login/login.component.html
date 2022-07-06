@@ -1,0 +1,92 @@
+<div class="container text-white">
+  <div *ngIf="this.identity!==null; then mostrarPerfil else signUp"></div>
+  <ng-template #signUp class="signup">
+
+    <h1 class="page-header text-center">Iniciar Sesion</h1>
+    <form class="form" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm, user.email, user.password)">
+      <div class="form-group">
+        <label for="email">Correo</label>
+        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="user.email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" [(ngModel)]="user.password" required>
+      </div>
+      <button type="submit" class="btn btn-primary mt-3 mb-3">Iniciar Sesion</button>
+    </form>
+
+    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Crear cuenta
+    </button>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Crear Cuenta</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form class="formCrear" #signupForm="ngForm" (ngSubmit)="onSubmitCrear(signupForm)">
+              <div class="form-group">
+                <label for="name">Nombre</label>
+                <input type="text" class="form-control" id="name" name="name" [(ngModel)]="user.nombre" required>
+              </div>
+              <div class="form-group">
+                <label for="lastname">Apellidos</label>
+                <input type="text" class="form-control" id="lastname" name="lastname" [(ngModel)]="user.apellidos"
+                  required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" [(ngModel)]="user.email" required>
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" [(ngModel)]="user.password"
+                  required>
+              </div>
+              <button type="submit" class="btn btn-primary mt-3">Crear cuenta</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #mostrarPerfil>
+    <h1 class="page-header">Perfil</h1>
+    <h4 id="emailLower">Email: {{this.identity}}</h4>
+    <button type="button" class="btn btn-warning mb-2" (click)="signOut(this.identity!)">Cerrar Sesion</button>
+    <hr>
+    <h2>Compras</h2>
+    <div class="tablas" *ngFor="let compraId of this.idCompras">
+      <table class="table table-striped table-light">
+        <thead>
+          <tr>
+            <th>ID Compra</th>
+            <th>Titulo</th>
+            <th>Cantidad</th>
+            <th>Imagen</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of this.compras">
+            <!-- <div *ngIf="compraId == item.compraId"> -->
+            <ng-template [ngIf]="compraId == item.compraId">
+              <td>{{item.compraId}}</td>
+              <td>{{item.nombreArticulo}}</td>
+              <td>{{item.cantidad}}</td>
+              <td><img src="{{'http://localhost:3700/api/articulos/get-image/'+item.imagen}}" alt="" width="150px"></td>
+
+              <td>${{item.precio}}.00</td>
+            </ng-template>
+            <!-- </div> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-template>
+
+</div>

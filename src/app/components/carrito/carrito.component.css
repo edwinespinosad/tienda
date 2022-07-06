@@ -1,0 +1,14 @@
+.tblArticles {
+  width: 700px;
+}
+.total {
+  /* border-bottom: .1rem solid rgba(0, 0, 0, .1); */
+  border: .1rem solid rgba(0, 0, 0, .1);
+  height: 50%;
+  width: 20%;
+}
+.carrito {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }

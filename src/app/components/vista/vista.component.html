@@ -1,0 +1,24 @@
+<p>vista works!</p>
+<div class="container text-white">
+  <section class="articulo">
+
+    <div class="artContent d-flex justify-content-around">
+      <div>
+        <img src="{{'http://localhost:3700/api/articulos/get-image/'+articulo.imagen}}" alt="" width="800">
+      </div>
+
+      <div>
+        <h2 class="title">{{articulo.nombre}}</h2>
+        <h2 class="precio">${{articulo.precio}}.00</h2>
+        <hr>
+        <h4 class="quantity">Cantidad</h4>
+        <input id="quantity" type="number" class="form-control-sm" value="1">
+        <!-- <button class="btn btn-primary m-2">Add to cart</button> -->
+        <button class="btn btn-primary m-2"
+          (click)="addACarrito(articulo._id!, articulo.nombre, articulo.precio, articulo.imagen)">Add to cart</button>
+
+      </div>
+    </div>
+
+  </section>
+</div>

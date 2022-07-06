@@ -1,0 +1,74 @@
+<section class="container bg-dark text-white">
+  <h1 class="page-header text-center">ARTICULOS</h1>
+  <div class="grid">
+    <div class="card bg-secondary" *ngFor="let articulo of articuloService.articulos">
+      <div class="card-body">
+        <h5 class="card-title">{{articulo.nombre}}</h5>
+        <h5 class="card-title">${{articulo.precio}}.00</h5>
+        <img src="{{'http://localhost:3700/api/articulos/get-image/'+articulo.imagen}}" alt="" width="100px"> <br>
+        <div *ngIf="admin; then Admin else User"></div>
+        <ng-template #User>
+          <div class="d-flex justify-content-around m-2">
+            <a [routerLink]="['/articulo', articulo._id]" class="btn btn-primary">
+              Ver
+            </a>
+            <!-- <a href="#" class="btn btn-primary">Ver</a> -->
+            <button class="btn btn-success"
+              (click)="addACarrito(articulo._id!, articulo.nombre, articulo.precio, articulo.imagen)">Agregar</button>
+          </div>
+        </ng-template>
+
+        <ng-template #Admin>
+
+          <div class="d-flex justify-content-around m-2">
+            <button (click)="deleteArticulo(articulo._id!)" class="btn btn-danger">Eliminar</button>
+            <button (click)="getArticulo(articulo._id!)" type="button" class="btn btn-warning" data-bs-toggle="modal"
+              data-bs-target="#exampleModal">
+              Modificar
+            </button>
+          </div>
+
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Editar Articulo</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form class="formCrear" #editarArticuloForm="ngForm" (ngSubmit)="onSubmit(editarArticuloForm)">
+                    <div class="form-group">
+                      <label for="name">Nombre</label>
+                      <input type="text" class="form-control" id="name" name="name" [(ngModel)]="articuloI.nombre"
+                        required>
+                    </div>
+                    <div class="form-group">
+                      <label for="lastname">Descripcion</label>
+                      <input type="text" class="form-control" id="descripcion" name="descripcion"
+                        [(ngModel)]="articuloI.descripcion" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="precio">Precio</label>
+                      <input type="number" class="form-control" id="precio" name="precio" [(ngModel)]="articuloI.precio"
+                        required>
+                    </div>
+                    <div class="form-group">
+                      <label for="image">Imagen</label>
+                      <input type="file" class="form-control" name="image" id="image"
+                        (change)="fileChangeEvent($event)">
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- <button (click)="editArticulo(articulo._id!)" class="btn btn-warning">Modificar</button> -->
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</section>
